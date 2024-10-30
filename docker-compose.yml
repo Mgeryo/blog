@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+
+  db:
+    image: postgres:15
+    container_name: blog_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: blog_db
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    env_file: 
+      - .env
+
+  blog:
+    image: blog_app
+    build:
+      context: .
+    container_name: blog_app
+    env_file:
+      - .env
+    depends_on: # Запускаем только после запуска БД 
+      - db
+    command: sh -c "alembic upgrade head && gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+    ports:
+      - 8000:8000
+
+volumes:
+  postgresdata:
