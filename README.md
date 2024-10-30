@@ -7,4 +7,4 @@ docker compose build
 docker compose up
 ```
 
-Для подключения в браузере используйте адрес `localhost:8000`. Для просмотра документации swagger api используйте адрес `localhost:8000/docs`.
+Для подключения, в браузере используйте адрес `localhost:8000`. Для просмотра документации swagger api используйте адрес `localhost:8000/docs`.
